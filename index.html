@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0d14">
+    <title>TypeFlow - Find Your Flow</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="keyboard.png">
+</head>
+<body>
+
+<div class="ambient ambient-one"></div>
+<div class="ambient ambient-two"></div>
+
+<main class="app-shell">
+
+
+    <header class="topbar">
+        <a class="brand" href="#" aria-label="TypeFlow home">
+        <span>
+            <b>TYPEFLOW</b>
+            <small>FIND YOUR FLOW</small>
+        </span>
+        </a>
+
+        <div class="top-actions">
+            <button
+                    class="icon-btn"
+                    id="soundToggle"
+                    title="Sound off"
+                    aria-label="Toggle sound"
+            >
+                🔇
+            </button>
+
+            <button
+                    class="icon-btn"
+                    id="modeToggle"
+                    title="Switch to light mode"
+                    aria-label="Toggle dark and light mode"
+            >
+                ☀
+            </button>
+
+            <button
+                    class="icon-btn"
+                    id="themeToggle"
+                    title="Change accent color"
+                    aria-label="Change accent color"
+            >
+                ✦
+            </button>
+        </div>
+    </header>
+
+
+
+    <section class="hero">
+        <div class="eyebrow">
+            <span class="live-dot"></span>
+            YOUR DAILY TYPING SPACE
+        </div>
+
+        <h1>Let your fingers<br><em>find the rhythm.</em></h1>
+
+        <p>Little by little, letter by letter. Get into the flow.</p>
+    </section>
+
+
+    <!-- CONTROLS -->
+
+    <section class="control-bar panel">
+
+        <div class="control-group">
+            <span class="control-label">CHOOSE YOUR JOURNEY</span>
+
+            <div class="category-list" id="categories">
+                <button class="category active" data-category="mix">
+                    ✧ <span>Surprise me</span>
+                </button>
+
+                <button class="category" data-category="stories">
+                    ◈ <span>Short stories</span>
+                </button>
+
+                <button class="category" data-category="quotes">
+                    ❝ <span>Quotes</span>
+                </button>
+
+                <button class="category" data-category="travel">
+                    ⌁ <span>Travel</span>
+                </button>
+
+                <button class="category" data-category="science">
+                    ✳ <span>Curious minds</span>
+                </button>
+
+                <button class="category" data-category="tech">
+                    ⌘ <span>Tech</span>
+                </button>
+
+                <button class="category" data-category="poetry">
+                    ☾ <span>Poetry</span>
+                </button>
+            </div>
+        </div>
+
+
+        <div class="control-divider"></div>
+
+
+        <div class="settings-row">
+
+            <!-- DURATION -->
+
+            <div class="setting duration-setting">
+
+                <span class="control-label">DURATION</span>
+
+                <div class="segmented" id="durations">
+                    <button data-time="15">15</button>
+                    <button data-time="30">30</button>
+                    <button class="selected" data-time="60">60</button>
+                    <button data-time="120">120</button>
+                    <button data-time="0" title="No time limit">∞</button>
+                </div>
+
+                <!-- CUSTOM TIMER -->
+
+                <div class="custom-duration">
+
+                    <span class="custom-duration-label">CUSTOM TIME</span>
+
+                    <div class="custom-duration-controls">
+
+                        <div class="time-input-group">
+                            <input
+                                    type="number"
+                                    id="customMinutes"
+                                    min="0"
+                                    max="999"
+                                    placeholder="00"
+                                    aria-label="Minutes"
+                            >
+                            <span>min</span>
+                        </div>
+
+                        <span class="time-separator">:</span>
+
+                        <div class="time-input-group">
+                            <input
+                                    type="number"
+                                    id="customSeconds"
+                                    min="0"
+                                    max="59"
+                                    placeholder="00"
+                                    aria-label="Seconds"
+                            >
+                            <span>sec</span>
+                        </div>
+
+                        <button
+                                type="button"
+                                id="applyCustomDuration"
+                                class="custom-time-btn"
+                        >
+                            Set timer
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LEVEL -->
+
+            <div class="setting">
+                <span class="control-label">LEVEL</span>
+
+                <select id="level">
+                    <option value="easy">Gentle</option>
+                    <option value="medium" selected>Balanced</option>
+                    <option value="hard">Challenge</option>
+                </select>
+            </div>
+
+
+            <!-- NEW TEXT -->
+
+            <button class="new-prompt-btn" id="newText">
+                ↻ <span>New text</span>
+            </button>
+
+        </div>
+    </section>
+
+
+    <!-- STATISTICS -->
+
+    <section class="stats-row">
+
+        <div class="stat">
+            <span>⚡ SPEED</span>
+            <strong id="wpm">0</strong>
+            <small>WPM</small>
+        </div>
+
+        <div class="stat">
+            <span>◎ ACCURACY</span>
+            <strong id="accuracy">100<small>%</small></strong>
+            <small>PRECISION</small>
+        </div>
+
+        <div class="stat">
+            <span>◷ TIME</span>
+            <strong id="time">60<small>s</small></strong>
+            <small id="timeMode">COUNTDOWN</small>
+        </div>
+
+        <div class="stat">
+            <span>✕ MISTAKES</span>
+            <strong id="errors">0</strong>
+            <small>INCORRECT KEYS</small>
+        </div>
+
+    </section>
+
+
+    <!-- TYPING AREA -->
+
+    <section class="typing-card panel" id="typingCard">
+
+        <div class="typing-head">
+
+            <div>
+                <span class="tag" id="textTag">DAILY MIX</span>
+                <span class="text-meta" id="textMeta">
+                    A little inspiration for your session
+                </span>
+            </div>
+
+            <div class="progress-wrap">
+                <span id="progressText">0%</span>
+
+                <div class="progress">
+                    <i id="progressBar"></i>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div
+                class="quote-area"
+                id="quoteArea"
+                tabindex="0"
+                role="button"
+                aria-label="Typing area. Click here and type the displayed text."
+        >
+
+            <div class="typing-text" id="typingText"></div>
+
+            <div class="start-overlay" id="startOverlay">
+                <div class="start-icon">↵</div>
+                <b>Click here and start typing</b>
+                <span>Your keyboard is ready when you are</span>
+            </div>
+
+        </div>
+
+
+        <div class="typing-foot">
+
+            <span id="typingStatus">
+                <i class="status-dot"></i>
+                Waiting for your first keystroke
+            </span>
+
+            <span class="typing-actions">
+
+                <button
+                        class="finish-session-btn"
+                        id="finishBtn"
+                        type="button"
+                >
+                    Finish session
+                </button>
+
+                <span>
+                    Type the words above <kbd>Esc</kbd> restart
+                </span>
+
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- VIRTUAL KEYBOARD -->
+
+    <section class="keyboard-panel panel">
+
+        <div class="section-heading">
+            <div>
+                <span class="mini-label">GET THE FEEL</span>
+                <h2>Your keyboard</h2>
+            </div>
+
+            <span class="finger-note">Follow the highlighted key</span>
+        </div>
+
+
+        <div class="keyboard" id="keyboard">
+
+            <div class="key-row">
+                <span>Q</span>
+                <span>W</span>
+                <span>E</span>
+                <span>R</span>
+                <span>T</span>
+                <span>Y</span>
+                <span>U</span>
+                <span>I</span>
+                <span>O</span>
+                <span>P</span>
+            </div>
+
+            <div class="key-row offset">
+                <span>A</span>
+                <span>S</span>
+                <span>D</span>
+                <span>F</span>
+                <span>G</span>
+                <span>H</span>
+                <span>J</span>
+                <span>K</span>
+                <span>L</span>
+            </div>
+
+            <div class="key-row">
+                <span class="wide">⇧</span>
+                <span>Z</span>
+                <span>X</span>
+                <span>C</span>
+                <span>V</span>
+                <span>B</span>
+                <span>N</span>
+                <span>M</span>
+                <span>,</span>
+                <span>.</span>
+                <span class="wide">↵</span>
+            </div>
+
+            <div class="key-row">
+                <span class="space-key">SPACE</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- RESULTS -->
+
+    <section class="result-card panel hidden" id="resultCard">
+
+        <div class="result-top">
+
+            <div>
+                <span class="mini-label">SESSION COMPLETE</span>
+
+                <h2>Look at you, in the zone. ✨</h2>
+
+                <p id="resultMessage">
+                    Every practice makes a difference.
+                </p>
+            </div>
+
+            <div class="result-emblem">✦</div>
+
+        </div>
+
+
+        <div class="result-stats">
+
+            <div>
+                <small>YOUR SPEED</small>
+                <b id="finalWpm">0 <i>WPM</i></b>
+            </div>
+
+            <div>
+                <small>ACCURACY</small>
+                <b id="finalAccuracy">0%</b>
+            </div>
+
+            <div>
+                <small>CHARACTERS</small>
+                <b id="finalChars">0</b>
+            </div>
+
+            <div>
+                <small>MISTAKES</small>
+                <b id="finalErrors">0</b>
+            </div>
+
+        </div>
+
+
+        <button class="primary-btn" id="againBtn">
+            One more round <span>↗</span>
+        </button>
+
+    </section>
+
+
+    <!-- REMINDERS AND HISTORY -->
+
+    <section class="bottom-grid">
+
+        <div class="panel tip-card">
+
+            <span class="mini-label">A LITTLE REMINDER</span>
+
+            <h3 id="tipTitle">Accuracy before speed.</h3>
+
+            <p id="tipText">
+                Slow down enough to build a clean rhythm.
+                Speed will follow naturally.
+            </p>
+
+        </div>
+
+
+        <div class="panel history-card">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="mini-label">YOUR JOURNEY</span>
+                    <h2>Recent sessions</h2>
+                </div>
+
+                <span class="best" id="best">BEST —</span>
+
+            </div>
+
+            <div id="historyList" class="history-list">
+                <p class="empty-history">
+                    Your sessions will show up here.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        TYPEFLOW <span>·</span>
+        PRACTICE WITH PRESENCE <span>·</span>
+        MADE FOR YOUR FLOW
+    </footer>
+
+</main>
+
+
+<script src="texts.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
